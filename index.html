@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f4f2ed">
+  <title>Guilherme Molina — Design, sites e dados</title>
+  <meta name="description" content="Design que comunica. Sites que conectam. Dados que fazem sentido. Conheça os projetos de Guilherme Molina e vamos conversar sobre o seu.">
+  <meta property="og:title" content="Guilherme Molina — Design, sites e dados">
+  <meta property="og:description" content="Criação visual, experiências digitais e dashboards. Conheça meus projetos.">
+  <meta property="og:image" content="https://guilherme-molina-portfolio.guilhermemolinasolan.chatgpt.site/assets/toniolo.webp">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#projetos">Pular para os projetos</a>
+  <header class="header">
+    <a class="wordmark" href="#inicio" aria-label="Guilherme Molina, início">guilherme<br>molina<span>✳</span></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="navigation">Menu <span>＋</span></button>
+    <nav id="navigation" aria-label="Navegação principal">
+      <a href="#projetos">Projetos</a><a href="#servicos">O que eu faço</a><a href="#sobre">Sobre</a><a class="nav-contact" href="#contato">Vamos conversar <span>↗</span></a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero wrap" id="inicio" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span> DESIGN, TECNOLOGIA & DADOS</p>
+        <h1 id="hero-title">Sua próxima<br>ideia merece<br><span>ganhar forma.</span></h1>
+        <p class="hero-description">Crio visuais que chamam atenção, sites que conectam e dashboards que transformam informação em clareza.</p>
+        <a class="button dark" href="#projetos">Explore meus projetos <span>↘</span></a>
+        <div class="hero-foot"><span>GUILHERME MOLINA SOLANO</span><span>CRIATIVIDADE COM PROPÓSITO.</span></div>
+      </div>
+      <div class="hero-art" aria-label="Seleção de projetos de design de Guilherme Molina">
+        <div class="art-topline"><span>SELEÇÃO DO PORTFÓLIO</span><span>01 — 06</span></div>
+        <div class="art-poster"><img src="assets/kart-02.webp" alt="Arte Kart Lokos: A sua estreia merece estrutura, em vermelho, preto e branco" fetchpriority="high"></div>
+        <div class="art-sticker" aria-hidden="true">DO CONCEITO<br>À TELA.<span>↗</span></div>
+        <div class="art-strip"><img src="assets/toniolo.webp" alt="Banner Toniolo Kart com piloto e rastros vermelhos"><span>DESIGN QUE<br>ENTRA EM CENA.</span></div>
+        <span class="art-bottom">COMUNICAÇÃO VISUAL / EXPERIÊNCIAS DIGITAIS</span>
+      </div>
+    </section>
+    <div class="discipline-band" aria-label="Áreas de atuação"><span>Design digital</span><i>✳</i><span>Sites & experiências</span><i>✳</i><span>Dados & dashboards</span><i>✳</i><span>Conteúdo visual</span><i>✳</i></div>
+    <section class="projects wrap" id="projetos" aria-labelledby="projects-title">
+      <div class="section-top"><p class="eyebrow">01 / TRABALHOS SELECIONADOS</p><span class="small-note">Diferentes desafios. Um olhar conectado.</span></div>
+      <div class="projects-heading"><h2 id="projects-title">O trabalho<br>fala por si<span>.</span></h2><p>Da primeira impressão à experiência completa.<br>Uma seleção do que eu crio e desenvolvo.</p></div>
+      <div class="filters" role="group" aria-label="Filtrar projetos por área"><button class="active" data-filter="todos" aria-pressed="true">Todos <sup>06</sup></button><button data-filter="design" aria-pressed="false">Design & conteúdo</button><button data-filter="sites" aria-pressed="false">Sites</button><button data-filter="dados" aria-pressed="false">Dados & dashboards</button></div>
+      <p class="sr-only" id="filter-status" role="status">6 projetos</p>
+      <div class="project-grid">
+        <article class="project" data-category="design"><button class="project-open" data-project="kart" aria-label="Ver projeto Kart Lokos"><div class="project-visual kart-visual"><img src="assets/kart-01.webp" alt="Criativo cinematográfico noturno do Kart Lokos" loading="lazy"><img src="assets/kart-02.webp" alt="Criativo editorial do Kart Lokos" loading="lazy"><img src="assets/kart-04.webp" alt="Criativo do Kart Lokos em quadrinhos" loading="lazy"><span class="image-label">22 EXPLORAÇÕES VISUAIS</span><span class="project-arrow">↗</span></div><div class="project-caption"><div><h3>Kart Lokos</h3><p>Velocidade que vira comunicação.</p></div><span>DESIGN / SOCIAL MEDIA</span></div></button></article>
+        <article class="project" data-category="sites"><button class="project-open" data-project="vertice" aria-label="Ver projeto Vértice Motors"><div class="project-visual vertice-visual"><div class="browser-line"><span>● ● ●</span><span>VÉRTICE MOTORS / CONCEITO</span></div><div class="vertice-title">VÉRTICE<span>MOTORS</span></div><img src="assets/vertice.webp" alt="Imagem ilustrativa de automóvel utilizada no projeto Vértice Motors" loading="lazy"><span class="vertice-foot">ENCONTRE SEU PRÓXIMO CAMINHO.</span><span class="project-arrow">↗</span></div><div class="project-caption"><div><h3>Vértice Motors</h3><p>Uma experiência digital em movimento.</p></div><span>SITE / PROJETO DEMONSTRATIVO</span></div></button></article>
+        <article class="project" data-category="dados"><button class="project-open" data-project="olist" aria-label="Ver projeto Olist E-commerce Analytics"><div class="project-visual olist-visual"><span class="olist-title">Do dado à decisão<span>OLIST E-COMMERCE ANALYTICS</span></span><img src="assets/olist.webp" alt="Captura real do dashboard executivo de análise de e-commerce em Power BI" loading="lazy"><span class="image-label">SQL + POWER BI + DAX</span><span class="project-arrow">↗</span></div><div class="project-caption"><div><h3>Olist Analytics</h3><p>Clareza para enxergar o negócio.</p></div><span>DADOS / POWER BI</span></div></button></article>
+        <article class="project" data-category="design"><button class="project-open" data-project="toniolo" aria-label="Ver projeto Toniolo Kart"><div class="project-visual toniolo-visual"><img src="assets/toniolo.webp" alt="Capa Toniolo Kart com retrato do piloto e ação na pista" loading="lazy"><span class="project-arrow">↗</span></div><div class="project-caption"><div><h3>Toniolo Kart</h3><p>Uma presença à altura da pista.</p></div><span>DESIGN / CAPA DE CANAL</span></div></button></article>
+        <article class="project" data-category="design"><button class="project-open" data-project="binance" aria-label="Ver projeto editorial Binance"><div class="project-visual binance-visual"><img src="assets/binance.webp" alt="Capa editorial Binance: O cofre não basta, com cofre e iluminação amarela" loading="lazy"><span class="project-arrow">↗</span></div><div class="project-caption"><div><h3>O cofre não basta</h3><p>Um tema complexo. Uma imagem direta.</p></div><span>CAPA / CONTEÚDO PESSOAL</span></div></button></article>
+        <article class="project" data-category="design"><button class="project-open" data-project="linkedin" aria-label="Ver projeto de capa profissional"><div class="project-visual linkedin-visual"><span class="linkedin-title">Dados, tecnologia<br>e uma identidade<span>APRESENTAÇÃO PROFISSIONAL</span></span><img src="assets/linkedin.webp" alt="Capa LinkedIn de Guilherme Molina: Data & Analytics Engineer" loading="lazy"><span class="project-arrow">↗</span></div><div class="project-caption"><div><h3>Data & Analytics</h3><p>Posicionamento que começa no visual.</p></div><span>DESIGN / MARCA PESSOAL</span></div></button></article>
+      </div>
+      <a class="text-link github-link" href="https://github.com/MolinaGG" target="_blank" rel="noopener noreferrer">Mais projetos e código no GitHub <span>↗</span></a>
+    </section>
+    <section class="services" id="servicos" aria-labelledby="services-title"><div class="wrap"><div class="section-top"><p class="eyebrow">02 / COMO POSSO AJUDAR</p><span class="small-note">O seu projeto, do começo ao próximo passo.</span></div><div class="services-layout"><h2 id="services-title">Um olhar criativo.<br>Mais possibilidades<span>.</span></h2><div class="service-list"><div class="service-row"><span class="service-number">01</span><div><h3>Design & conteúdo visual</h3><p>Artes para Instagram, campanhas, thumbnails, banners e capas que traduzem o universo da sua marca.</p></div><span class="service-symbol">✳</span></div><div class="service-row"><span class="service-number">02</span><div><h3>Sites & experiências digitais</h3><p>Sites de apresentação, páginas de campanha e interfaces responsivas para colocar seu negócio em cena.</p></div><span class="service-symbol">↗</span></div><div class="service-row"><span class="service-number">03</span><div><h3>Dados & dashboards</h3><p>Organização, análise e visualização de dados para acompanhar operações e apoiar decisões com mais clareza.</p></div><span class="service-symbol">▥</span></div></div></div></div></section>
+    <section class="about wrap" id="sobre" aria-labelledby="about-title"><div class="about-portrait"><img src="assets/guilherme.webp" alt="Foto de Guilherme Molina Solano" loading="lazy"><span>GUILHERME MOLINA SOLANO</span><div class="portrait-mark" aria-hidden="true">gm.</div></div><div class="about-copy"><p class="eyebrow">03 / POR TRÁS DOS PROJETOS</p><h2 id="about-title">Criatividade na forma.<br>Clareza na entrega<span>.</span></h2><p>Sou Guilherme Molina. Meu trabalho conecta criação visual, desenvolvimento web e análise de dados.</p><p>Gosto de transitar entre esses mundos: traduzir uma ideia em imagem, construir uma experiência digital e encontrar uma forma simples de apresentar informações complexas.</p><p>Minha atuação com dados aplicada a risco, crédito e operações financeiras também influencia meu jeito de criar: entender o contexto, organizar as ideias e dar atenção ao que precisa ficar claro.</p><p class="ai-note">Uso inteligência artificial como parte do processo criativo, com curadoria e revisão das entregas. As aplicações estão identificadas nos projetos.</p><a class="text-link" href="https://www.linkedin.com/in/guilhermesolano" target="_blank" rel="noopener noreferrer">Conheça minha trajetória no LinkedIn <span>↗</span></a></div></section>
+    <section class="process wrap" aria-label="Como trabalhamos"><p class="eyebrow">DA CONVERSA À ENTREGA</p><div class="process-grid"><div><span>01 / ENTENDER</span><h3>Primeiro, o seu contexto.</h3><p>Conversamos sobre seu objetivo, público e o que precisa sair do papel.</p></div><div><span>02 / CRIAR</span><h3>Uma direção com intenção.</h3><p>Organizo as ideias e desenvolvo uma proposta visual ou digital para o projeto.</p></div><div><span>03 / REFINAR</span><h3>Ajustar faz parte.</h3><p>Revisamos o trabalho e alinhamos os detalhes para chegar à entrega combinada.</p></div></div></section>
+    <section class="contact" id="contato" aria-labelledby="contact-title"><div class="wrap"><div class="section-top"><p class="eyebrow">04 / VAMOS CRIAR ALGO JUNTOS</p><span class="contact-spark" aria-hidden="true">✳</span></div><h2 id="contact-title">Qual é a sua<br><em>próxima ideia?</em></h2><div class="contact-bottom"><p>Um site, uma campanha ou um dashboard.<br>Me conte o que você tem em mente.</p><a class="button dark" href="https://www.linkedin.com/in/guilhermesolano" target="_blank" rel="noopener noreferrer">Vamos conversar no LinkedIn <span>↗</span></a></div></div></section>
+  </main>
+  <footer class="footer wrap"><a class="wordmark" href="#inicio">guilherme<br>molina<span>✳</span></a><p>DESIGN, TECNOLOGIA & DADOS.</p><div><a href="https://github.com/MolinaGG" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/guilhermesolano" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="#inicio">Voltar ao topo ↑</a></div><span>© <span id="year">2026</span> Guilherme Molina</span></footer>
+  <dialog id="project-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><span>PROJETO SELECIONADO</span><button class="close-dialog" aria-label="Fechar projeto">Fechar ✕</button></div><div class="dialog-content"><div class="dialog-description"><p id="dialog-category" class="eyebrow"></p><h2 id="dialog-title"></h2><p id="dialog-summary"></p><div class="dialog-tags" id="dialog-tags"></div><p id="dialog-note" class="project-note"></p><a id="dialog-link" class="text-link" target="_blank" rel="noopener noreferrer"></a></div><div class="gallery"><div class="gallery-stage"><img id="gallery-image" alt=""></div><div class="gallery-controls"><button id="gallery-prev" aria-label="Imagem anterior">←</button><span id="gallery-count" aria-live="polite"></span><button id="gallery-next" aria-label="Próxima imagem">→</button></div><div id="gallery-thumbs" class="gallery-thumbs"></div></div></div><div class="dialog-footer"><span>Vamos criar algo para a sua marca?</span><a href="https://www.linkedin.com/in/guilhermesolano" target="_blank" rel="noopener noreferrer">Converse comigo ↗</a></div></dialog>
+</body>
+</html>
