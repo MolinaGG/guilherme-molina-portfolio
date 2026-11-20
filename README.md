@@ -1,42 +1,45 @@
-# Guilherme Molina — Portfólio
+# Guilherme Molina — Financial Data & BI
 
-Design digital, sites e dashboards em um portfólio responsivo, com seis projetos e demonstração interativa de analytics.
+[Live portfolio](https://guilherme-molina-portfolio.guilhermemolinasolan.chatgpt.site/) · [Português](README.pt-BR.md) · [LinkedIn](https://www.linkedin.com/in/guilhermesolano/)
 
-**[Abrir o site](https://guilherme-molina-portfolio.guilhermemolinasolan.chatgpt.site)** · **[Olist Analytics](https://github.com/MolinaGG/olist-ecommerce-analytics)** · **[LinkedIn](https://www.linkedin.com/in/guilhermesolano)**
+A bilingual portfolio for Data Analyst and BI Analyst opportunities, connecting financial context with reproducible analysis. English is the default; [Portuguese](https://guilherme-molina-portfolio.guilhermemolinasolan.chatgpt.site/pt.html) has equivalent case-study content.
 
-O site hospedado está privado para revisão do proprietário. Publicar este código no GitHub não altera essa configuração.
+## Start with the evidence
 
-## Projetos
+| Case study | Focus | Explore |
+| --- | --- | --- |
+| Olist E-commerce Analytics | Delivery performance, metric definitions, Power BI and Python data preparation | [Case study](https://guilherme-molina-portfolio.guilhermemolinasolan.chatgpt.site/#olist-case) · [Interactive dashboard, in Portuguese](https://guilherme-molina-portfolio.guilhermemolinasolan.chatgpt.site/olist/) · [Repository](https://github.com/MolinaGG/olist-ecommerce-analytics) |
+| Market Lens BR | Coupon-adjusted returns, public data and temporal model validation | [Case study](https://guilherme-molina-portfolio.guilhermemolinasolan.chatgpt.site/#market-case) · [Research demo, in Portuguese](https://market-lens-br-web.onrender.com/) · [Repository](https://github.com/MolinaGG/market-lens-br) |
 
-- Kart Lokos: oito peças selecionadas entre 22 explorações visuais.
-- Vértice Motors: projeto demonstrativo de uma revenda fictícia.
-- Olist Analytics: dashboard com filtros, quatro visões e exportação CSV.
-- Toniolo Kart: apresentação visual para canal.
-- O cofre não basta: capa editorial pessoal sobre Binance, sem vínculo comercial.
-- Data & Analytics: apresentação profissional para LinkedIn.
+The site is public, as confirmed through its hosting configuration on 20 November 2026. The research API may take about a minute to wake after inactivity. See each project's methodology before interpreting results.
 
-## Executar localmente
+## What is in this repository
 
-Requer Python 3 para servir os arquivos. Não há instalação nem etapa de compilação.
+- `index.html` and `pt.html`: English and Portuguese presentation, business questions, findings, limitations and evidence links.
+- `finance.css`: responsive styles for the analytical portfolio; no JavaScript is required for the new landing pages.
+- `creative.html`, `styles.css` and `app.js`: preserved complementary gallery and project dialogs.
+- `olist/`: existing interactive dashboard; analytical logic and data preserved, with the return link updated.
+- `docs/github-profile/README.md`: bilingual profile introduction, also published in the [MolinaGG/MolinaGG profile repository](https://github.com/MolinaGG/MolinaGG).
+- `assets/`: project images and portrait.
+
+## Run locally
+
+Requires Python 3. No package installation or build is needed.
 
 ```bash
 python -m http.server 8000
 ```
 
-Abra http://localhost:8000. O dashboard fica em http://localhost:8000/olist/. Servir por HTTP é necessário para carregar o JSON de dados; abrir o HTML diretamente como arquivo não é suficiente.
+Open http://localhost:8000. Use HTTP rather than opening files directly so the Olist dashboard can load its JSON data.
 
-## Organização
+## Context and attribution
 
-`index.html`, `styles.css` e `app.js` contêm o portfólio. `assets/` reúne as imagens otimizadas e `olist/` contém o dashboard independente. O modelo Power BI, as fontes e o processo de reconstrução dos dados estão no [repositório Olist](https://github.com/MolinaGG/olist-ecommerce-analytics).
+Independent studies do not imply a relationship with Olist or other organizations represented in public data. Historical dataset values are not client-impact metrics, recognized revenue or proven losses. Market Lens is exploratory research, not investment advice or a causal model.
 
-O site usa HTML, CSS e JavaScript sem dependências de execução. As fontes do Google Fonts são opcionais; há alternativas locais de tipografia.
+The complementary gallery retains project-specific AI-use disclosures. AI-assisted presentation work should not be confused with demonstrated professional experience. Images and third-party brands do not receive a blanket reuse license through this repository.
 
-## Validação
+## Check navigation
 
-Filtros dos projetos, navegação móvel, galerias, teclado e carregamento de imagens foram verificados em navegador. O dashboard teve os indicadores confrontados com os CSVs e o modelo Power BI. Para testes dos cálculos, consulte o repositório Olist.
-
-## Créditos e contexto
-
-Criação assistida por IA identificada nos projetos aplicáveis. As cenas do Kart Lokos são ilustrativas. Marcas e nomes de terceiros identificam os assuntos ou projetos apresentados; não implicam parceria ou endosso.
-
-As imagens e marcas não recebem uma licença geral de reutilização por este repositório. A configuração do serviço de hospedagem e os arquivos temporários do desenvolvimento não estão incluídos.
+```bash
+node --test tests/navigation.test.cjs
+```
