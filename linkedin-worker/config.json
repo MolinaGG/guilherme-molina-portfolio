@@ -1,0 +1,11 @@
+{
+  "enabled": true,
+  "organization_id": "6b00dcba5949beba52687275",
+  "channel_id": "6b00dce1ece6dfde5f3b84c0",
+  "channel_name": "guilhermesolano",
+  "timezone": "America/Sao_Paulo",
+  "queue_limit": 10,
+  "media_repository": "MolinaGG/guilherme-molina-portfolio",
+  "media_branch": "main",
+  "media_prefix": "assets/linkedin"
+}

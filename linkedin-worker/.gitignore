@@ -1,0 +1,7 @@
+.buffer-key
+.env
+config.local.json
+state/
+__pycache__/
+tests/__pycache__/
+*.zip
