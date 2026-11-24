@@ -108,7 +108,7 @@ class BufferClient:
         unsent = self._list_posts_filtered(org_id, channel_id,
                     ', status: [draft, error, needs_approval, scheduled, sending]')
         sent = self._list_posts_filtered(org_id, channel_id,
-                    ', status: [sent], startDate: ' + _literal(since))
+                    ', status: [sent], dueAt: {start: ' + _literal(since) + '}')
         # A post can transition while the two independently paginated scans run.
         return list({post['id']: post for post in unsent + sent}.values())
 

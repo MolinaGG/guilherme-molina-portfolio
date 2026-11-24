@@ -27,7 +27,8 @@ class ClientTests(unittest.TestCase):
             self.assertIn('status: [draft, error, needs_approval, scheduled, sending]',query)
             self.assertNotIn('startDate',query)
         self.assertIn('after: "next"',queries[1])
-        self.assertIn('status: [sent], startDate: "2026-11-13T09:00:00Z"',queries[2])
+        self.assertIn('status: [sent], dueAt: {start: "2026-11-13T09:00:00Z"}',queries[2])
+        self.assertNotIn('startDate',queries[2])
 
     def test_budget_callback_precedes_reads_and_writes_and_preserves_failure(self):
         fake=Fake()

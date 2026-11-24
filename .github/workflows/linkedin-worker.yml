@@ -36,7 +36,7 @@ jobs:
       - run: python -m unittest discover -s tests -q
   publish:
     needs: validate
-    if: vars.LINKEDIN_WORKER_PAUSED != 'true'
+    if: github.ref == 'refs/heads/main' && vars.LINKEDIN_WORKER_PAUSED != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
