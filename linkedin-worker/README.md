@@ -1,23 +1,15 @@
 # LinkedIn worker — Guilherme Molina Solano
 
-Worker diário em GitHub Actions para manter três publicações por dia no LinkedIn, com fontes e imagens. Usa primeiro os 90 posts existentes e, após todos constarem como enviados, gera novos lotes pela API OpenAI. Os 10 agendamentos existentes são migrados pelo seed, sem reenviar.
+Worker diário em GitHub Actions para manter três publicações por dia no LinkedIn, com fontes e imagens. Publica apenas o catálogo aprovado, sem chamar a API OpenAI. Após o catálogo acabar, novos lotes aprovados serão necessários para manter três publicações por dia. Os 10 agendamentos existentes são migrados pelo seed, sem reenviar.
 
 ## Arquitetura
 
 ```mermaid
 flowchart TD
- A[GitHub Actions: diário 06h17 Brasília] --> B[Restaurar estado GitHub com SHA]
- B --> C[Conciliar fila e envios do Buffer]
- C --> D{90 enviados e backlog menor que6?}
- D -->|Não| I[Completar fila até 10]
- D -->|Sim| E[Reservar tentativa e quota no estado]
- E --> F[OpenAI: pesquisar fontes e escrever3posts]
- F --> G[OpenAI: revisar textos, fontes e cartões]
- G --> H[Pillow: gerar PNG e hospedar por hash]
- H --> I
- I --> J[Gravar intenção antes de cada envio]
- J --> K[Buffer: agendar e reler confirmação]
- K --> B
+ A[GitHub Actions diário] --> B[Conciliar fila e envios do Buffer]
+ B --> C[Selecionar conteúdo aprovado e slots futuros]
+ C --> D[Gravar intenção antes de agendar]
+ D --> E[Agendar no Buffer e reler para confirmar]
 ```
 
 ## Ativação
@@ -27,39 +19,32 @@ O workflow fica em `.github/workflows/linkedin-worker.yml`; código em `linkedin
 | Secret | Valor |
 |---|---|
 | BUFFER_API_KEY | Chave da sua conta Buffer já conectada ao LinkedIn |
-| OPENAI_API_KEY | Chave criada na OpenAI Platform; nunca token de sessão do Codex |
 
 O `GITHUB_TOKEN` é fornecido pelo próprio Actions, não precisa criar PAT. Não publique chaves em arquivos, commits, issues, screenshots ou chat.
 
-Depois acesse [Actions / LinkedIn worker](https://github.com/MolinaGG/guilherme-molina-portfolio/actions/workflows/linkedin-worker.yml), clique **Run workflow**, branch **main**, e acompanhe o job **publish**. Push de código do worker, cron e execução manual testam antes de publicar. Commits de estado e imagens não acionam o workflow. Um job verde com `status: ok` e readback confirma a execução. `scheduled: 0` é normal se a fila estiver cheia. O estado persistente fica em `linkedin-worker/runtime/state.json`.
+Depois acesse [Actions / LinkedIn worker](https://github.com/MolinaGG/guilherme-molina-portfolio/actions/workflows/linkedin-worker.yml), clique **Run workflow**, branch **main**, e acompanhe o job **publish**. Push de código do worker executa apenas a validação, inclusive na main. Só o cron e a execução manual na main podem publicar, após os testes. Commits de estado e imagens não acionam o workflow. Um job verde com `status: ok` e readback confirma a execução. `scheduled: 0` é normal se a fila estiver cheia. O estado persistente fica em `linkedin-worker/runtime/state.json`.
 
-A recorrência é 09:17 UTC (06h17 Brasília), independente do seu PC. Buffer entrega08h30/12h30/18h. O horário do cron pode atrasar; a fila dá antecedência. GitHub pode desativar agendamentos públicos após 60 dias sem atividade; os commits de estado mantêm atividade durante operação normal, mas confira Actions após pausas longas.
+A recorrência é 09:17 UTC (06h17 Brasília), independente do seu PC. Os slots planejados no Buffer são 08h30, 12h30 e 18h. O horário do cron pode atrasar; a fila dá antecedência. GitHub pode desativar agendamentos públicos após 60 dias sem atividade; os commits de estado mantêm atividade durante operação normal, mas confira Actions após pausas longas.
 
 ## Configuração opcional por Repository variables
 
 | Variável | Padrão | Finalidade |
 |---|---|---|
-| OPENAI_MODEL | gpt-5-mini | Modelo com Responses e web_search disponível na sua conta |
-| MAX_MONTHLY_AI_CALLS |64| Teto de requisições IA por mês, entre 2 e 64 |
-| ENABLE_LINKEDIN_GENERATION |true| false interrompe novos textos, preserva publicação de conteúdo pronto |
 | LINKEDIN_WORKER_PAUSED |false| true impede novas execuções de publicação |
 
 Para pausar imediatamente, desabilite o workflow ou configure `LINKEDIN_WORKER_PAUSED=true`. Posts já agendados no Buffer continuam; pause também o canal Buffer se quiser interromper entregas. Não execute `publisher.py sync --apply` local nem a antiga tarefa Codex em paralelo ao worker.
 
 ## Custos e limites
 
-- Actions em runner Linux padrão de repositório público segue a gratuidade/cotas do GitHub. Não provisionamos servidor n8n.
-- Buffer mantém limite de 10 posts na fila e suas próprias cotas de API. O worker consulta todos os posts não enviados e os enviados nos últimos 7 dias. Reserva cada requisição no histórico e para antes de ultrapassar 900 no mês, deixando margem para uso externo. Erro de cota interrompe a execução, sem retry de publicação.
-- OpenAI Platform cobra uso da API e ferramentas. A assinatura ChatGPT/Codex não substitui essa cobrança. Durante os90 iniciais não há geração IA.
-- No máximo1 tentativa de lote/dia e2 requisições de IA por tentativa, com saída limitada a 8000 tokens/requisição e até 6 chamadas de ferramenta por requisição. O teto64 é de chamadas, NÃO um teto financeiro. Configure também controles de gastos/créditos na Platform.
-- Novos lotes só surgem com backlog abaixo de 6. Uma falha não dispara geração repetida no mesmo dia. Sem chave/modelo/créditos/fontes válidas, para e reporta em Actions.
-- Execução contínua depende da disponibilidade dos serviços, créditos e políticas; não há promessa de funcionamento eterno ou engajamento garantido.
+- O workflow de produção não recebe credencial OpenAI e o comando de produção não habilita a geração paga. Ele pode concluir um lote previamente gerado e já aprovado, sem nova chamada de IA.
+- Actions usa runner Linux padrão do GitHub em repositório público. Buffer mantém limite de 10 posts na fila e suas próprias cotas de API. O worker consulta todos os posts não enviados e os enviados nos últimos 7 dias. Reserva cada requisição no histórico e para antes de ultrapassar 900 no mês, deixando margem para uso externo.
+- Se não houver conteúdo aprovado, o worker fica sem novos posts para agendar, sem contratar nenhum serviço ou gerar conteúdo novo. A operação depende dos serviços e suas políticas.
 
 ## Conteúdo e engajamento
 
 Português direto, sem emojis, sem procura explícita de emprego, sem experiências inventadas. Temas de SQL, Power BI, Python, projetos e decisões de negócio. A pesquisa usa fontes primárias; a revisão independente precisa aprovar texto, pontos da imagem e referências. Isso reduz erros, mas não prova veracidade automaticamente.
 
-O histórico recente orienta diversidade; não há automação de curtidas, comentários, mensagens ou conexões. O arquivo opcional `metrics.csv` recebe dados reais exportados/manualizados do LinkedIn, com `post_id,topic,impressions,comments,shares`. O worker agrega comentários+compartilhamentos/impressões e apresenta esses sinais ao gerador. Não há acesso automático a analytics contratado/conectado aqui, e amostras pequenas não provam qual assunto causou alcance.
+O histórico recente orienta diversidade; não há automação de curtidas, comentários, mensagens ou conexões. O arquivo opcional `metrics.csv` recebe dados reais exportados/manualizados do LinkedIn, com `post_id,topic,impressions,comments,shares`. O script de métricas agrega comentários e compartilhamentos por impressão para planejamento editorial. Não há acesso automático a analytics contratado/conectado aqui, e amostras pequenas não provam qual assunto causou alcance.
 
 ## Estado e recuperação
 
@@ -74,6 +59,6 @@ O histórico recente orienta diversidade; não há automação de curtidas, come
 
 ## Verificação
 
-`python -m unittest discover -s tests -q` executa testes sem chamadas pagas ou posts reais. Integração real OpenAI só pode ser confirmada após configurar a chave. O cliente Buffer já agendou e releu 10 posts reais antes desta migração.
+`python -m unittest discover -s tests -q` executa testes sem chamadas pagas ou posts reais. O cliente Buffer já agendou e releu 10 posts reais antes desta migração.
 
-Fontes: [GitHub Actions](https://docs.github.com/en/actions/concepts/billing-and-usage), [agendamentos](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule), [Buffer API](https://developers.buffer.com/guides/posts-and-scheduling.html), [OpenAI autenticação](https://learn.chatgpt.com/docs/auth), [web search](https://developers.openai.com/api/docs/guides/tools-web-search).
+Fontes: [GitHub Actions](https://docs.github.com/en/actions/concepts/billing-and-usage), [agendamentos](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule), [Buffer API](https://developers.buffer.com/guides/posts-and-scheduling.html).
