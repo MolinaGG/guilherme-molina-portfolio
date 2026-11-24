@@ -77,14 +77,15 @@ class CloudWorker:
             created=0
             sent={r['id'] for r in state['journal'] if r['status']=='sent'}
             backlog=sum(p['id'] not in sent for p in catalog)
-            if preview['generation_ready'] and backlog<6 and not any(p.get('generated_on')==day for p in catalog):
-                reviewed=sorted(k for k,v in state['generation'].items() if v['status']=='reviewed')
+            reviewed=sorted(k for k,v in state['generation'].items() if v['status']=='reviewed')
+            if ((generate or reviewed) and preview['generation_ready'] and backlog<6
+                    and not any(p.get('generated_on')==day for p in catalog)):
                 attempt_day=reviewed[0] if reviewed else day
                 attempt=state['generation'].get(attempt_day)
                 if attempt and attempt['status']=='started':
                     raise WorkerError('Generation already attempted today; inspect failure before a later daily run')
                 if not attempt:
-                    if not generate or not api_key or not model:
+                    if not api_key or not model:
                         # Flush existing approved backlog even when generation credentials are missing.
                         result=sync(work,self.buffer,now,apply=True,preflight=self.preflight,journal_factory=factory)
                         result.update(generation_status='blocked_missing_configuration')
@@ -119,6 +120,7 @@ class CloudWorker:
                 self.store.save(state)
             result=sync(work,self.buffer,now,apply=True,preflight=self.preflight,journal_factory=factory)
             result.update(generated=created,calls_this_month=state['calls'].get(month,0))
+            if not generate:result['generation_status']='disabled_zero_cost'
             result['buffer_calls_this_month']=state['buffer_calls'].get(month,0)
             self.compact(state)
             state['last_result']=result
@@ -151,9 +153,8 @@ def main():
     from github_store import GitHubStore
     store=GitHubStore(os.environ['GITHUB_REPOSITORY'],os.environ['GITHUB_TOKEN'])
     worker=CloudWorker(ROOT,store,BufferClient(os.environ['BUFFER_API_KEY'],recent_history=os.getenv('BUFFER_FULL_HISTORY')!='true'))
-    result=worker.run(datetime.now(timezone.utc),generate=os.getenv('ENABLE_GENERATION')=='true',
-                      api_key=os.getenv('OPENAI_API_KEY',''),model=os.getenv('OPENAI_MODEL',''),
-                      monthly_calls=int(os.getenv('MAX_MONTHLY_AI_CALLS','64')))
+    # Production is a zero-cost publisher. Do not read or pass paid AI credentials.
+    result=worker.run(datetime.now(timezone.utc),generate=False,api_key='',model='')
     print(json.dumps(result,ensure_ascii=False))
     summary=os.getenv('GITHUB_STEP_SUMMARY')
     if summary:
