@@ -22,7 +22,7 @@ O workflow fica em `.github/workflows/linkedin-worker.yml`; código em `linkedin
 
 O `GITHUB_TOKEN` é fornecido pelo próprio Actions, não precisa criar PAT. Não publique chaves em arquivos, commits, issues, screenshots ou chat.
 
-Depois acesse [Actions / LinkedIn worker](https://github.com/MolinaGG/guilherme-molina-portfolio/actions/workflows/linkedin-worker.yml), clique **Run workflow**, branch **main**, e acompanhe o job **publish**. Push de código do worker, cron e execução manual testam antes de publicar. Commits de estado e imagens não acionam o workflow. Um job verde com `status: ok` e readback confirma a execução. `scheduled: 0` é normal se a fila estiver cheia. O estado persistente fica em `linkedin-worker/runtime/state.json`.
+Depois acesse [Actions / LinkedIn worker](https://github.com/MolinaGG/guilherme-molina-portfolio/actions/workflows/linkedin-worker.yml), clique **Run workflow**, branch **main**, e acompanhe o job **publish**. Push de código do worker executa apenas a validação, inclusive na main. Só o cron e a execução manual na main podem publicar, após os testes. Commits de estado e imagens não acionam o workflow. Um job verde com `status: ok` e readback confirma a execução. `scheduled: 0` é normal se a fila estiver cheia. O estado persistente fica em `linkedin-worker/runtime/state.json`.
 
 A recorrência é 09:17 UTC (06h17 Brasília), independente do seu PC. Os slots planejados no Buffer são 08h30, 12h30 e 18h. O horário do cron pode atrasar; a fila dá antecedência. GitHub pode desativar agendamentos públicos após 60 dias sem atividade; os commits de estado mantêm atividade durante operação normal, mas confira Actions após pausas longas.
 

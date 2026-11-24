@@ -120,6 +120,14 @@ class CloudWorkerTests(unittest.TestCase):
             self.assertFalse(worker.return_value.run.call_args.kwargs['generate'])
             self.assertEqual(worker.return_value.run.call_args.kwargs['api_key'],'')
 
+    def test_workflow_push_validates_but_cannot_publish(self):
+        workflow=(Path(__file__).resolve().parents[2]/'.github/workflows/linkedin-worker.yml').read_text()
+        self.assertIn('  push:',workflow.split('jobs:',1)[0])
+        validate,publish=workflow.split('  validate:',1)[1].split('  publish:',1)
+        self.assertNotIn('    if:',validate)
+        gate=next(line.strip()[len('if: '):] for line in publish.splitlines() if line.startswith('    if: '))
+        self.assertEqual(gate,"github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && vars.LINKEDIN_WORKER_PAUSED != 'true'")
+
     def test_disabled_worker_makes_no_cloud_mutations(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);self.setup_root(root);store=MemoryStore();client=FakeBuffer()
